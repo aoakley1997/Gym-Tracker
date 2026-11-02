@@ -10,7 +10,7 @@ const demos={
 'Chest-supported row':{q:'chest supported seated row machine tutorial',tip:'Keep your chest against the pad throughout.'},
 'Seated tricep machine':{q:'seated triceps extension machine tutorial',tip:'Use a seated, supported machine and avoid straining.'}
 };
-const plans=[[['Stationary bike',0,0],['Chest press machine',3,10],['Lat pulldown',3,10],['Leg press',2,12],['Seated dumbbell lateral raises',2,12],['Supported bicep curls',2,12]],[['Stationary bike',0,0],['Pec deck / chest fly',3,10],['Chest-supported row',3,10],['Leg press',2,12],['Seated tricep machine',2,12],['Supported bicep curls',2,12]]];
+const plans=[[['Stationary bike',0,0],['Chest press machine',3,10],['Lat pulldown',3,10],['Leg press',3,12],['Seated dumbbell lateral raises',3,12],['Supported bicep curls',3,12]],[['Stationary bike',0,0],['Pec deck / chest fly',3,10],['Chest-supported row',3,10],['Leg press',3,12],['Seated tricep machine',3,12],['Supported bicep curls',3,12]]];
 let day=0,db={sets:{},history:[]},seconds=60,timer=null;try{const old=JSON.parse(localStorage.getItem('gym-tracker-v1'));if(old&&old.sets&&Array.isArray(old.history))db=old}catch(e){}
 const $=id=>document.getElementById(id),key=(i,s)=>day+'-'+i+'-'+s,store=()=>localStorage.setItem('gym-tracker-v1',JSON.stringify(db));
 function tick(){seconds=Math.max(0,seconds-1);clock();if(seconds===0){stop();if(navigator.vibrate)navigator.vibrate([200,100,200])}}
