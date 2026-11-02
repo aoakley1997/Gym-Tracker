@@ -73,7 +73,7 @@ $('save').onclick=finishWorkout;$('clear').onclick=()=>{if(!confirm('Clear this 
 $('export').onclick=exportData;$('import').onclick=()=>$('importFile').click();
 $('addExercise').onclick=()=>{const name=prompt('Exercise name (choose from library):\n'+library.map(x=>x[0]).join('\n'));if(!name)return;const found=library.find(x=>x[0].toLowerCase()===name.trim().toLowerCase());if(!found){alert('Choose an exercise from the library.');return}db.plans[day].push([found[0],3,12]);persist();render()};
 $('closeSummary').onclick=()=>$('summaryDialog').close();
-$('removeExercise').onclick=()=>{const i=db.plans[day].findIndex(x=>x[0]===selectedExercise);if(i<0)return;if(!confirm('Remove this exercise? Current unsaved set entries may shift.'))return;db.plans[day].splice(i,1);db.sets={};persist();$('editor').close();render()};
+$('removeExercise').onclick=()=>{const i=db.plans[day].findIndex(x=>x[0]===selectedExercise);if(i<0)return;if(!confirm('Remove this exercise? Current unsaved set entries may shift.'))return;db.plans[day].splice(i,1);const remapped={};for(const [k,v] of Object.entries(db.sets)){const m=k.match(/^([01])-(\d+)-(\d+|warm)$/);if(!m||Number(m[1])!==day){remapped[k]=v;continue}const ix=Number(m[2]);if(ix<i)remapped[k]=v;else if(ix>i)remapped[day+'-'+(ix-1)+'-'+m[3]]=v}db.sets=remapped;persist();$('editor').close();render()};
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
 restRemaining=Number(db.settings.rest);updateTimer();render();
 </script></body></html>
